@@ -1,0 +1,117 @@
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  models.Aluno:
+    properties:
+      cpf:
+        description: nao permite que tamanho seja diferente de 11 e somente sao permitidos
+          numeros
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      nome:
+        description: nao permite valor vazio
+        type: string
+      rg:
+        description: nao permite que tamanho seja diferente de 9 e somente sao permitidos
+          numeros
+        type: string
+      updatedAt:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /alunos:
+    delete:
+      consumes:
+      - application/json
+      description: Rota para excluir um aluno
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Exclui um aluno a partir do seu ID
+      tags:
+      - alunos
+    get:
+      consumes:
+      - application/json
+      description: Rota para pesquisar um aluno pelo CPF
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Pesquisa por alunos a partir do numero do CPF
+      tags:
+      - alunos
+    patch:
+      consumes:
+      - application/json
+      description: Rota para alterar as informações de um aluno
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Edita as informações de um aluno
+      tags:
+      - alunos
+    post:
+      consumes:
+      - application/json
+      description: Rota para cadastrar um novo aluno
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Cadastra um novo aluno
+      tags:
+      - alunos
+swagger: "2.0"
